@@ -1,5 +1,17 @@
 ﻿cmake_minimum_required(VERSION 3.11)
 
+#cmake 集成vcpkg(需要在project前增加)
+
+IF (NOT DEFINED ENV{Qt5_DIR})
+    IF (WIN64)
+        SET(CMAKE_TOOLCHAIN_FILE "E:/vcpkg/scripts/buildsystems/vcpkg.cmake -Wno-dev")
+    ENDIF ()
+ENDIF ()
+#如果是在clion中编译，需要打开file->settings->Build,Execution,Deployment->Cmake
+#在Toolchain中选择Visual Studio
+#在Cmake options中输入“-G "Visual Studio 16 2019" -A x64”
+#因为vcpkg默认是使用Visual Studio编译而非mingw
+
 #设置项目名
 project(loading VERSION 1.0.0 LANGUAGES C CXX)
 

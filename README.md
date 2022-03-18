@@ -96,3 +96,11 @@ sudo apt-get -y autoremove --purge &&\
 sudo apt-get -y remove --purge &&\
 sudo apt-get -f install
 ```
+
+# 10.Windows Clion设置Cmake编译参数
+因为vcpkg默认是使用Visual Studio编译而非mingw编译，因此如果是在Windows clion中编译，需要打开file->settings->Build,Execution,Deployment->Cmake
+在Toolchain中选择Visual Studio
+在Cmake options中输入“-G "Visual Studio 16 2019" -A x64”
+如下图：
+![img](./1647599873.png)
+

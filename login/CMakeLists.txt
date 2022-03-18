@@ -11,6 +11,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+
+
 #设置QT5默认路径
 IF (NOT DEFINED ENV{Qt5_DIR})
     IF (WIN32)
@@ -42,6 +44,12 @@ ENDIF ()
 #ELSE ()
 #    add_definitions(-DWIN32_LEAN_AND_MEAN)
 #ENDIF ()
+
+#设置编译器选项
+IF (WIN32)
+    ADD_COMPILE_OPTIONS("/utf-8")
+ENDIF ()
+
 #查找软件包
 find_package(Qt5 COMPONENTS Core REQUIRED)
 find_package(Qt5 COMPONENTS Gui REQUIRED)
@@ -49,6 +57,7 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Intl REQUIRED)
 #查找自定义的类库
 IF (WIN32)
+
     #    find_path(KMCB_INCLUDE NAMES KcCore.h PATHS ${KMCB_DIR}/include NO_DEFAULT_PATH)
     #    find_library(KMCB_LIB kmcb.lib "${KMCB_DIR}/lib/Release")
 ELSE ()
@@ -116,6 +125,7 @@ IF (WIN32)
             Qt5::Gui
             Qt5::Widgets
             #其它
+            ${Intl_LIBRARIES}
             #${KMCB_LIB}
             )
 ELSE ()
@@ -125,6 +135,7 @@ ELSE ()
             Qt5::Gui
             Qt5::Widgets
             #其它
+            ${Intl_LIBRARIES}
             #${KMCB_LIB}
             )
 ENDIF ()

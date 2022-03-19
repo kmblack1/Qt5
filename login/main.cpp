@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
 #else
     font = new QFont("Monospace", 12);
 #endif
+    KC_CHECK_MALLOC(font, str);
     font->setStyleStrategy(QFont::PreferAntialias);
     app->setFont(*font);
     //4.注册元数据类型后才可以在信号槽中使用
@@ -63,10 +64,9 @@ int main(int argc, char *argv[]) {
         textStream = new QTextStream(stream);
         KC_CHECK_MALLOC(textStream, str);
         app->setStyleSheet(textStream->readAll());
-        stream->close();
     }
     KC_SAFE_DELETE(textStream);
-    KC_SAFE_DELETE(stream);
+    KC_SAFE_CLOSE_DELETE(stream);
 
     //9.显示窗体
     dialog = new QdKcLogin(str);
@@ -79,8 +79,8 @@ int main(int argc, char *argv[]) {
     }
     KC_SAFE_DELETE(dialog);
     KC_SAFE_DELETE(font);
-    KC_SAFE_QSHAREDMEMORY_DELETE(shared);
-    KC_SAFE_QAPPLICATION_DELETE(app);
+    KC_SAFE_DESTROYED_DELETE(shared);
+    KC_SAFE_EXIT_DELETE(app);
     KC_SAFE_STRINGBUF_FREE(str);
     return rc;
 KC_ERROR_CLEAR:
@@ -88,10 +88,10 @@ KC_ERROR_CLEAR:
     KC_SAFE_DELETE(stream);
     KC_SAFE_DELETE(dialog);
     KC_SAFE_DELETE(font);
-    KC_SAFE_QSHAREDMEMORY_DELETE(shared);
+    KC_SAFE_DESTROYED_DELETE(shared);
     QMessageBox::critical(Q_NULLPTR, QString::fromLocal8Bit(_TR("error")), QString::fromLocal8Bit(_TR(str->data)),
                           QMessageBox::Ok, QMessageBox::Ok);
-    KC_SAFE_QAPPLICATION_DELETE(app);
+    KC_SAFE_EXIT_DELETE(app);
     KC_SAFE_STRINGBUF_FREE(str);
     return EXIT_FAILURE;
 }

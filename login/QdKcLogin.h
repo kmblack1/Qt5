@@ -12,13 +12,13 @@
 #include "stringbuffer.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class QdKcMain; }
+namespace Ui { class QdKcLogin; }
 QT_END_NAMESPACE
 
-class QdKcMain : public QDialog {
+class QdKcLogin : public QDialog {
 Q_OBJECT
 private:
-    Ui::QdKcMain *ui;
+    Ui::QdKcLogin *ui;
     bool mIsMove = false;
     QPoint mMouseLastPos;
 
@@ -28,9 +28,9 @@ private:
 
 
 public:
-    explicit QdKcMain(StringBuffer str,QWidget *parent = nullptr);
+    explicit QdKcLogin(StringBuffer str,QWidget *parent = nullptr);
 
-    ~QdKcMain() override;
+    ~QdKcLogin() override;
 private:
     int32_t loadmage();
 protected:

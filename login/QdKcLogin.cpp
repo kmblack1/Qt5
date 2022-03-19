@@ -8,12 +8,12 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include "KcUtility.h"
-#include "QdKcMain.h"
-#include "ui_QdKcMain.h"
+#include "QdKcLogin.h"
+#include "ui_QdKcLogin.h"
 
 
-QdKcMain::QdKcMain(StringBuffer str, QWidget *parent) :
-        QDialog(parent), mStr(str), ui(new Ui::QdKcMain) {
+QdKcLogin::QdKcLogin(StringBuffer str, QWidget *parent) :
+        QDialog(parent), mStr(str), ui(new Ui::QdKcLogin) {
     KC_CHECK_MALLOC(this->ui, str);
     ui->setupUi(this);
 
@@ -41,13 +41,13 @@ QdKcMain::QdKcMain(StringBuffer str, QWidget *parent) :
     this->reject();
 }
 
-QdKcMain::~QdKcMain() {
+QdKcLogin::~QdKcLogin() {
     KC_SAFE_DELETE(this->mImage);
     KC_SAFE_DELETE(this->mPixmap);
     KC_SAFE_DELETE(ui);
 }
 
-int32_t QdKcMain::loadmage() {
+int32_t QdKcLogin::loadmage() {
     StringBuffer str = this->mStr;
 
     this->mImage = new QImage();
@@ -64,7 +64,7 @@ int32_t QdKcMain::loadmage() {
 
 #pragma region 重写父类中的方法
 
-void QdKcMain::resizeEvent(QResizeEvent *event) {
+void QdKcLogin::resizeEvent(QResizeEvent *event) {
     StringBuffer str = this->mStr;
     const QSize &qsize = event->size();
     QRect src, target(0, 0, qsize.width(), qsize.height());
@@ -131,7 +131,7 @@ void QdKcMain::resizeEvent(QResizeEvent *event) {
  * 1.每次窗体大小发生变化时将在内存中重新绘制与窗体大小相同的图像
  * 2.当窗体需要重新绘制时直接绘制在内存中的图像
  */
-void QdKcMain::paintEvent(QPaintEvent *event) {
+void QdKcLogin::paintEvent(QPaintEvent *event) {
     StringBuffer str = this->mStr;
     QPainter *painter = NULL;
 
@@ -152,13 +152,13 @@ void QdKcMain::paintEvent(QPaintEvent *event) {
 }
 
 //鼠标按下事件
-void QdKcMain::mousePressEvent(QMouseEvent *event) {
+void QdKcLogin::mousePressEvent(QMouseEvent *event) {
     mMouseLastPos = event->globalPos();  //获取按下时的坐标(全局坐标)
     this->mIsMove = true;
 }
 
 //鼠标移动事件
-void QdKcMain::mouseMoveEvent(QMouseEvent *event) {
+void QdKcLogin::mouseMoveEvent(QMouseEvent *event) {
     if (this->mIsMove) {
         int dx = event->globalX() - mMouseLastPos.x();   //
         int dy = event->globalY() - mMouseLastPos.y();
@@ -169,7 +169,7 @@ void QdKcMain::mouseMoveEvent(QMouseEvent *event) {
 }
 
 //鼠标释放事件可以有也可以没有
-void QdKcMain::mouseReleaseEvent(QMouseEvent *event) {
+void QdKcLogin::mouseReleaseEvent(QMouseEvent *event) {
     if (this->mIsMove) {
         int dx = event->globalX() - mMouseLastPos.x();
         int dy = event->globalY() - mMouseLastPos.y();

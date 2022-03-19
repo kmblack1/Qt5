@@ -83,6 +83,7 @@ ENDIF ()
 
 #添加所有源文件
 SET(KC_SRC
+        KcVld.c
         main.cpp
         stringbuffer.c
         QdKcLogin.cpp)

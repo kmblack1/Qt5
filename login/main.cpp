@@ -8,7 +8,7 @@
 #include <QTextStream>
 #include "stringbuffer.h"
 #include "KcUtility.h"
-#include "QdKcMain.h"
+#include "QdKcLogin.h"
 
 int main(int argc, char *argv[]) {
     int32_t rc = KC_OK;
@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 
     QApplication *app = NULL;
     QSharedMemory *shared = NULL;
-    QdKcMain *dialog = NULL;
+    QdKcLogin *dialog = NULL;
     QFile *stream = NULL;
     QTextStream *textStream = NULL;
 
@@ -30,27 +30,26 @@ int main(int argc, char *argv[]) {
     //2.创建QApplication
     app = new QApplication(argc, argv);
     KC_CHECK_MALLOC(app, str);
-    //3.只允许运行一个程序
-    shared = new QSharedMemory("loading");
-    KC_CHECK_MALLOC(app, str);
-    if (!shared->create(1)) {
-        KC_SAFE_QOBJECT_DELETE(shared);
-        KC_SAFE_QAPPLICATION_EXIT_DELETE(app);
-        return EXIT_FAILURE;
-    }
-    //4.设置中文字体
+
+    //3.设置中文字体
 #ifdef _WIN32
     app->setFont(QFont("Microsoft Yahei", 12));
 #else
     app->setFont(QFont("Noto Mono", 12));
 #endif
-    //5.注册元数据类型后才可以在信号槽中使用
+    //4.注册元数据类型后才可以在信号槽中使用
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<int64_t>("int64_t");
-    //6.设置应用程序信息
+    //5.设置应用程序信息
     QCoreApplication::setOrganizationName(QString::fromLocal8Bit("kuncb.cn"));
     QCoreApplication::setApplicationName(QString::fromLocal8Bit("loading"));
     QCoreApplication::setApplicationVersion(QString::fromLocal8Bit("1.0.0"));
+
+    //6.只允许运行一个程序
+    shared = new QSharedMemory(QCoreApplication::applicationName());
+    KC_CHECK_MALLOC(shared, str);
+    if (!shared->create(1))
+        KC_GOTOERR(str,"%s","application is already running."/*shared->errorString().toLocal8Bit().data()*/);
     //7.加载默认语言包
 
     //8.加载全局样式
@@ -62,33 +61,32 @@ int main(int argc, char *argv[]) {
         KC_CHECK_MALLOC(textStream, str);
         app->setStyleSheet(textStream->readAll());
         stream->close();
-        KC_SAFE_QOBJECT_DELETE(stream);
-        KC_SAFE_DELETE(textStream);
     }
+    KC_SAFE_DELETE(textStream);
+    KC_SAFE_DELETE(stream);
 
     //9.显示窗体
-    dialog = new QdKcMain(str);
+    dialog = new QdKcLogin(str);
     KC_CHECK_MALLOC(dialog, str);
     if (QDialog::Accepted == dialog->exec()) {
+        KC_SAFE_DELETE(dialog);
         //在这里显示主窗体
 
         rc = app->exec();
     }
-    KC_SAFE_DELETE(textStream);
-    KC_SAFE_QOBJECT_DELETE(stream);
-    KC_SAFE_QOBJECT_DELETE(dialog);
-    KC_SAFE_QOBJECT_DELETE(shared);
-    KC_SAFE_QAPPLICATION_EXIT_DELETE(app);
+    KC_SAFE_DELETE(dialog);
+    KC_SAFE_QSHAREDMEMORY_DELETE(shared);
+    KC_SAFE_DELETE(app);
     KC_SAFE_STRINGBUF_FREE(str);
     return rc;
 KC_ERROR_CLEAR:
     KC_SAFE_DELETE(textStream);
-    KC_SAFE_QOBJECT_DELETE(stream);
-    KC_SAFE_QOBJECT_DELETE(dialog);
-    KC_SAFE_QOBJECT_DELETE(shared);
-    KC_SAFE_QAPPLICATION_EXIT_DELETE(app);
+    KC_SAFE_DELETE(stream);
+    KC_SAFE_DELETE(dialog);
+    KC_SAFE_QSHAREDMEMORY_DELETE(shared);
     QMessageBox::critical(Q_NULLPTR, QString::fromLocal8Bit(_TR("error")), QString::fromLocal8Bit(_TR(str->data)),
                           QMessageBox::Ok, QMessageBox::Ok);
+    KC_SAFE_DELETE(app);
     KC_SAFE_STRINGBUF_FREE(str);
     return EXIT_FAILURE;
 }

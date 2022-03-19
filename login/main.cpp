@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
     QdKcLogin *dialog = NULL;
     QFile *stream = NULL;
     QTextStream *textStream = NULL;
+    QFont *font=NULL;
 
     str = createStringBuffer();
 
@@ -33,10 +34,12 @@ int main(int argc, char *argv[]) {
 
     //3.设置中文字体
 #ifdef _WIN32
-    app->setFont(QFont("Microsoft Yahei", 12));
+    font = new QFont("Microsoft Yahei", 12);
 #else
-    app->setFont(QFont("Noto Mono", 12));
+    font = new QFont("Monospace", 12);
 #endif
+    font->setStyleStrategy(QFont::PreferAntialias);
+    app->setFont(*font);
     //4.注册元数据类型后才可以在信号槽中使用
     qRegisterMetaType<int32_t>("int32_t");
     qRegisterMetaType<int64_t>("int64_t");
@@ -75,18 +78,20 @@ int main(int argc, char *argv[]) {
         rc = app->exec();
     }
     KC_SAFE_DELETE(dialog);
+    KC_SAFE_DELETE(font);
     KC_SAFE_QSHAREDMEMORY_DELETE(shared);
-    KC_SAFE_DELETE(app);
+    KC_SAFE_QAPPLICATION_DELETE(app);
     KC_SAFE_STRINGBUF_FREE(str);
     return rc;
 KC_ERROR_CLEAR:
     KC_SAFE_DELETE(textStream);
     KC_SAFE_DELETE(stream);
     KC_SAFE_DELETE(dialog);
+    KC_SAFE_DELETE(font);
     KC_SAFE_QSHAREDMEMORY_DELETE(shared);
     QMessageBox::critical(Q_NULLPTR, QString::fromLocal8Bit(_TR("error")), QString::fromLocal8Bit(_TR(str->data)),
                           QMessageBox::Ok, QMessageBox::Ok);
-    KC_SAFE_DELETE(app);
+    KC_SAFE_QAPPLICATION_DELETE(app);
     KC_SAFE_STRINGBUF_FREE(str);
     return EXIT_FAILURE;
 }

@@ -36,14 +36,16 @@
 } while (0)
 
 /*****************************************************************************
-*	安全释放带destroyed方法的对象
+*	安全释放QSharedMemory对象
 *****************************************************************************/
-#define KC_SAFE_DESTROYED_DELETE(ptr) do {\
+#define KC_SAFE_SHAREDMEMORY_DELETE(ptr) do {\
 	if (NULL !=  (ptr)) { \
-        (ptr)->destroyed(); \
+		if( (ptr)-> isAttached()) \
+			(ptr)->detach(); \
 		delete (ptr);  (ptr) = NULL;\
 	}\
 } while (0)
+
 
 /*****************************************************************************
 *	安全释放QAPPLICATION对象

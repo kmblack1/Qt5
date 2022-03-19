@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
     }
     KC_SAFE_DELETE(dialog);
     KC_SAFE_DELETE(font);
-    KC_SAFE_DESTROYED_DELETE(shared);
+    KC_SAFE_SHAREDMEMORY_DELETE(shared);
     KC_SAFE_EXIT_DELETE(app);
     KC_SAFE_STRINGBUF_FREE(str);
     return rc;
@@ -88,7 +88,7 @@ KC_ERROR_CLEAR:
     KC_SAFE_DELETE(stream);
     KC_SAFE_DELETE(dialog);
     KC_SAFE_DELETE(font);
-    KC_SAFE_DESTROYED_DELETE(shared);
+    KC_SAFE_SHAREDMEMORY_DELETE(shared);
     QMessageBox::critical(Q_NULLPTR, QString::fromLocal8Bit(_TR("error")), QString::fromLocal8Bit(_TR(str->data)),
                           QMessageBox::Ok, QMessageBox::Ok);
     KC_SAFE_EXIT_DELETE(app);

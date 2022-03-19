@@ -16,7 +16,8 @@ QLabel{
 
 QLineEdit {
 	border-radius:6px;
-	min-height:38px;
+	padding:4px;
+	min-height:30px;
 	border: 2px solid #818181;
 }
 

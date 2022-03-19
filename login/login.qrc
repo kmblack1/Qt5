@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="login">
+    <file>loading.png</file>
+  </qresource>
+  <qresource prefix="qss">
+    <file>black.css</file>
+  </qresource>
+</RCC>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QmKcMain</class>
- <widget class="QDialog" name="QmKcMain">
+ <class>QdKcMain</class>
+ <widget class="QDialog" name="QdKcMain">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>QmKcMain</string>
+   <string>QdKcMain</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -74,7 +74,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="txtPassword"/>
+      <widget class="QLineEdit" name="txtPassword">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -98,6 +102,9 @@
        <property name="text">
         <string>Ok</string>
        </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -117,6 +124,8 @@
   <tabstop>btnOk</tabstop>
   <tabstop>btnCancel</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="login.qrc"/>
+ </resources>
  <connections/>
 </ui>

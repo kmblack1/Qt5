@@ -85,20 +85,21 @@ ENDIF ()
 SET(KC_SRC
         main.cpp
         stringbuffer.c
-        QmKcMain.cpp)
+        QdKcLogin.cpp)
 
 #添加所有QT头文件
 SET(KC_QT_SRC_HEADERS
-        QmKcMain.h
+        QdKcLogin.h
         )
 
 #添加所有.ui文件
 SET(KC_QT_SRC_UI
-        QmKcMain.ui
+        QdKcLogin.ui
         )
 
 #添加所有资源文件
 SET(KC_QT_SRC_RESOURCES
+        login.qrc
         )
 
 #调用预编译器moc，需要使用 QT5_WRAP_CPP宏

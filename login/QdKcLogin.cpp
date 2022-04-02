@@ -35,7 +35,7 @@ QdKcLogin::QdKcLogin(StringBuffer str, QWidget *parent) :
     this->ui->txtUserId->setFocus();
     this->ui->btnOk->setEnabled(false);
     return;
-    KC_ERROR_CLEAR:
+KC_ERROR_CLEAR:
     QMessageBox::critical(this, QString::fromLocal8Bit(_TR("error")), QString::fromLocal8Bit(_TR(str->data)),
                           QMessageBox::Ok, QMessageBox::Ok);
     this->reject();
@@ -55,7 +55,7 @@ int32_t QdKcLogin::loadmage() {
     if (!this->mImage->load(QString(":/login/loading.png")))
         KC_GOTOERR(str, "%s", "load background image fail.");
     return KC_OK;
-    KC_ERROR_CLEAR:
+KC_ERROR_CLEAR:
     KC_SAFE_DELETE(this->mImage);
     KC_SAFE_DELETE(this->mPixmap);
     return KC_FAIL;
@@ -119,7 +119,7 @@ void QdKcLogin::resizeEvent(QResizeEvent *event) {
     painter->end();
     KC_SAFE_DELETE(painter);
     return;
-    KC_ERROR_CLEAR:
+KC_ERROR_CLEAR:
     KC_SAFE_DELETE(painter);
     QMessageBox::critical(this, QString::fromLocal8Bit(_TR("error")), QString::fromLocal8Bit(_TR(str->data)),
                           QMessageBox::Ok, QMessageBox::Ok);
@@ -145,7 +145,7 @@ void QdKcLogin::paintEvent(QPaintEvent *event) {
     painter->end();
     KC_SAFE_DELETE(painter);
     return;
-    KC_ERROR_CLEAR:
+KC_ERROR_CLEAR:
     KC_SAFE_DELETE(painter);
     QMessageBox::critical(this, QString::fromLocal8Bit(_TR("error")), QString::fromLocal8Bit(_TR(str->data)),
                           QMessageBox::Ok, QMessageBox::Ok);

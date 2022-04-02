@@ -1,5 +1,6 @@
 .git/
 login/.idea/
+login/build/
 login/cmake-build-debug/
 login/cmake-build-debug-visual-studio
 login/cmake-build-release-visual-studio

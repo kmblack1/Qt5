@@ -3,7 +3,7 @@ set VCPKG_INSTALLED_PATH=E:\vcpkg
 set QT_INSTALLED_PATH=E:\Qt\5.15.1\msvc2019_64
 set APP_INSTALL_PATH=E:\test\loading
 set VC_INSTALL_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional
-set WIN_SYS=%WIN_SYS%
+set WIN_SYS=C:\Windows\SysWOW64
 
 rd /S /Q %APP_INSTALL_PATH%
 rd /S /Q %SOURCE_PATH%build
